@@ -1,26 +1,19 @@
-import express from "express";
+const express = require('express');
+const mongoose = require('mongoose');
+const url = 'mongodb://localhost/MyDBscl'
+
 const app = express();
 
-import mongoose from "mongoose";
-import { } from 'dotenv/config'
-import postRoutes from './routes/post.js';
+mongoose.connect(url);
+const con = mongoose.connection
 
-//Middlearwe
-app.use('/posts', postRoutes);
+con.on('open', () => {
+    console.log('connected...')
+})
 
+const userRouter = require('./routers/users.js')
+app.use('/users', userRouter)
 
-app.get("/", (req, res) => {
-    res.send("hello express");
-});
-
-app.get("/posts", (req, res) => {
-    res.send("hello posts");
-});
-
-// dataBase connect
-mongoose.connect(
-    process.env.DB_CONNECTION,
-    () => console.log("connected to db")
-);
-
-app.listen(5000);
+app.listen(9000, () => {
+    console.log('server running....')
+})
