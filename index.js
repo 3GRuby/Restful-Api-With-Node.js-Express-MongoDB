@@ -1,21 +1,21 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const url = 'mongodb://localhost/MyDBscl'
+const express = require("express");
+const mongoose = require("mongoose");
+const url = "mongodb://localhost/MyDBscl";
 
 const app = express();
 
 mongoose.connect(url);
-const con = mongoose.connection
+const con = mongoose.connection;
 
-con.on('open', () => {
-    console.log('connected...')
-})
+con.on("open", () => {
+    console.log("connected...");
+});
 
-app.use(express.json())
+app.use(express.json());
 
-const userRouter = require('./routers/users.js')
-app.use('/users', userRouter)
+const userRouter = require("./routers/users.js");
+app.use("/users", userRouter);
 
 app.listen(9000, () => {
-    console.log('server running....')
-})
+    console.log("server running....");
+});
