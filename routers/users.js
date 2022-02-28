@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/user.js')
 
-
+// Get users
 router.get('/', async (req, res) => {
 
     try {
@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
         res.send('get request' + error)
     }
 });
-
+// Get single User
 router.get('/:id', async (req, res) => {
 
     try {
@@ -27,6 +27,7 @@ router.get('/:id', async (req, res) => {
     }
 });
 
+// create user
 router.post('/', async (req, res) => {
 
     const user = new User({
@@ -45,14 +46,34 @@ router.post('/', async (req, res) => {
 
     }
 });
-
+//Update User
 router.patch('/:id', async (req, res) => {
     try {
+
+        const user = await User.findById(req.params.id)
+        user.sub = req.body.sub;
+        const a = await user.save()
+        res.json(a)
 
     } catch (error) {
         res.send('error')
 
     }
 })
+    /
+    router.delete('/:id', async (req, res) => {
+        try {
+
+            const removeUser = await User.remove({ _id: req.params.id })
+
+            res.json(removeUser)
+
+        } catch (error) {
+            res.send('error')
+
+        }
+    })
+
+
 
 module.exports = router
