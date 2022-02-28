@@ -1,79 +1,26 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const User = require('../models/user.js')
+const User = require("../models/user.js");
+
+const getUsers = require("../controllers/control.js");
+const getUser = require("../controllers/control.js");
+const createUser = require("../controllers/control.js");
+const updateeUser = require("../controllers/control.js");
+const deleteUser = require("../controllers/control.js");
 
 // Get users
-router.get('/', async (req, res) => {
+router.get("/", getUsers);
 
-    try {
-
-        const users = await User.find()
-        res.send(users);
-
-    } catch (error) {
-        res.send('get request' + error)
-    }
-});
 // Get single User
-router.get('/:id', async (req, res) => {
-
-    try {
-
-        const user = await User.findById(req.params.id)
-        res.send(user);
-
-    } catch (error) {
-        res.send('get request' + error)
-    }
-});
+router.get("/:id", getUser);
 
 // create user
-router.post('/', async (req, res) => {
+router.post("/", createUser);
 
-    const user = new User({
-        name: req.body.name,
-        tech: req.body.tech,
-        sub: req.body.sub
-    });
-    try {
-
-        const a = await user.save()
-        res.json(a)
-
-    } catch (error) {
-
-        res.send(error)
-
-    }
-});
 //Update User
-router.patch('/:id', async (req, res) => {
-    try {
+router.patch("/:id", updateeUser);
 
-        const user = await User.findById(req.params.id)
-        user.sub = req.body.sub;
-        const a = await user.save()
-        res.json(a)
+//delete User
+router.delete("/:id", deleteUser);
 
-    } catch (error) {
-        res.send('error')
-
-    }
-})
-    /
-    router.delete('/:id', async (req, res) => {
-        try {
-
-            const removeUser = await User.remove({ _id: req.params.id })
-
-            res.json(removeUser)
-
-        } catch (error) {
-            res.send('error')
-
-        }
-    })
-
-
-
-module.exports = router
+module.exports = router;
