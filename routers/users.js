@@ -7,6 +7,7 @@ const getUser = require("../controllers/control.js");
 const createUser = require("../controllers/control.js");
 const updateeUser = require("../controllers/control.js");
 const deleteUser = require("../controllers/control.js");
+ //end points  
 
 // Get users
 router.get("/", getUsers);
